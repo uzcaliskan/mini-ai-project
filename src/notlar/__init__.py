@@ -1,0 +1,1 @@
+"""Minyatür not defteri uygulaması."""
