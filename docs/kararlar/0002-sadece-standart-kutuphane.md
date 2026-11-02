@@ -3,6 +3,8 @@
 - **Tarih:** 2026-11-02
 - **Durum:** Kabul edildi
 
+> Not: Web arayüzü için kısmen yerine geçildi: 0005 (CLI hâlâ yalnızca standart kütüphane kullanır).
+
 ## Karar
 Çalışma zamanı bağımlılığı yok (argparse, json, pathlib). Sadece geliştirme aracı olarak `pytest` kurulur, `.venv` içine.
 

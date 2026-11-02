@@ -1,0 +1,141 @@
+<!doctype html>
+<html lang="tr">
+<head>
+  <meta charset="utf-8">
+  <meta name="csrf-token" content="{{ csrf_token }}">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Notlar</title>
+  <link rel="icon" href="data:,">
+  <style>
+    :root {
+      --masa: #d9e1e8;
+      --kagit: #fbfcfd;
+      --cizgi: #bfd2e2;
+      --kenar: #d9737d;
+      --murekkep: #1b2a4a;
+      --soluk: #56637f;
+      --kalem: #ffe45c;
+      --satir: 2.25rem;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      min-height: 100vh;
+      background: var(--masa);
+      color: var(--murekkep);
+      font-family: Cambria, Georgia, serif;
+      font-size: 1.125rem;
+    }
+    main { max-width: 40rem; margin: 0 auto; padding: 3rem 1rem 4rem; }
+    h1 {
+      margin: 0 0 1.25rem;
+      font-family: Bahnschrift, "Segoe UI", system-ui, sans-serif;
+      font-weight: 600;
+      font-size: 2.75rem;
+      letter-spacing: -.02em;
+      line-height: 1;
+    }
+    .kagit {
+      position: relative;
+      padding: 0 1.25rem 0 4.5rem;
+      background-color: var(--kagit);
+      background-image: repeating-linear-gradient(
+        to bottom, transparent 0, transparent calc(var(--satir) - 1px),
+        var(--cizgi) calc(var(--satir) - 1px), var(--cizgi) var(--satir));
+      border-radius: 2px;
+      box-shadow: 0 1px 0 #fff inset, 0 10px 30px -12px rgba(27, 42, 74, .35);
+      line-height: var(--satir);
+      min-height: calc(var(--satir) * 12);
+    }
+    .kagit::before {
+      content: "";
+      position: absolute; top: 0; bottom: 0; left: 3.25rem;
+      border-left: 2px solid var(--kenar);
+      opacity: .7;
+    }
+    form { display: flex; align-items: center; height: var(--satir); }
+    input {
+      flex: 1; min-width: 0; height: var(--satir);
+      border: 0; background: transparent; color: inherit;
+      font: inherit; line-height: var(--satir);
+      padding: 0;
+    }
+    input::placeholder { color: var(--soluk); font-style: italic; }
+    input:focus-visible { outline: none; background: linear-gradient(transparent 62%, var(--kalem) 62%); }
+    button {
+      border: 0; background: transparent; color: var(--murekkep);
+      font: 600 .9375rem Bahnschrift, "Segoe UI", system-ui, sans-serif;
+      cursor: pointer; padding: 0 .5rem; height: var(--satir);
+    }
+    button:hover { text-decoration: underline; text-underline-offset: .2em; }
+    button:focus-visible, input:focus-visible { outline-offset: 2px; }
+    button:focus-visible { outline: 2px solid var(--murekkep); }
+    ul { list-style: none; margin: 0; padding: 0; }
+    li { display: flex; justify-content: space-between; align-items: flex-start; gap: .75rem; }
+    li span { flex: 1; overflow-wrap: anywhere; }
+    li button { color: var(--soluk); font-weight: 400; }
+    li.yeni span { animation: kalem 1.6s ease-out; }
+    @keyframes kalem {
+      from { background: linear-gradient(transparent 62%, var(--kalem) 62%); }
+      to { background: linear-gradient(transparent 62%, transparent 62%); }
+    }
+    #bos { margin: 0; color: var(--soluk); font-style: italic; }
+    @media (max-width: 30rem) {
+      main { padding-top: 1.5rem; }
+      .kagit { padding-left: 2.25rem; }
+      .kagit::before { left: 1.5rem; }
+    }
+    @media (prefers-reduced-motion: reduce) { li.yeni span { animation: none; } }
+  </style>
+</head>
+<body>
+  <main>
+    <h1>Notlar</h1>
+    <div class="kagit">
+      <form id="form">
+        <input id="metin" placeholder="Yeni not yaz, Enter'a bas" aria-label="Yeni not" autocomplete="off" required>
+        <button type="submit">Ekle</button>
+      </form>
+      <p id="bos" hidden>Henüz not yok. İlk notunu yukarıdaki satıra yaz.</p>
+      <ul id="liste"></ul>
+    </div>
+  </main>
+  <script>
+    const liste = document.getElementById("liste");
+    const bos = document.getElementById("bos");
+    const csrf = document.querySelector('meta[name="csrf-token"]').content;
+
+    async function yenile(yeniId) {
+      const notlar = await (await fetch("/api/notlar")).json();
+      bos.hidden = notlar.length > 0;
+      liste.replaceChildren(...notlar.map(n => {
+        const li = document.createElement("li");
+        if (n.id === yeniId) li.className = "yeni";
+        const span = document.createElement("span");
+        span.textContent = n.metin;
+        const btn = document.createElement("button");
+        btn.textContent = "Sil";
+        btn.setAttribute("aria-label", "Notu sil: " + n.metin);
+        btn.onclick = async () => { await fetch("/api/notlar/" + n.id, { method: "DELETE", headers: { "X-CSRFToken": csrf } }); yenile(); };
+        li.append(span, btn);
+        return li;
+      }));
+    }
+
+    document.getElementById("form").onsubmit = async e => {
+      e.preventDefault();
+      const girdi = document.getElementById("metin");
+      const yanit = await fetch("/api/notlar", {
+        method: "POST",
+        headers: { "Content-Type": "application/json", "X-CSRFToken": csrf },
+        body: JSON.stringify({ metin: girdi.value }),
+      });
+      const yeni = yanit.ok ? await yanit.json() : null;
+      girdi.value = "";
+      yenile(yeni && yeni.id);
+    };
+
+    yenile();
+  </script>
+</body>
+</html>

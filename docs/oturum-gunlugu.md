@@ -2,6 +2,17 @@
 
 Yeni kayıtlar en üste eklenir.
 
+## 2026-11-02 (dördüncü oturum, devam)
+- Web sayfası çizgili not defteri görünümüne çevrildi.
+- Kullanıcı isteğiyle web arayüzü Django'ya taşındı (karar 0005; 0004 yerine geçildi, 0002 web için kısmen). `web.py` silindi, `src/notlar/web/` paketi eklendi, testler Django istemcisine çevrildi (CSRF dahil), `requirements.txt`'e django eklendi.
+- `manage.py` eklendi: `python manage.py runserver` (PYTHONPATH gerekmez). Chrome DevTools ile ekleme/silme elle denendi, çalışıyor.
+- Açık: GITHUB_PAT/github MCP hâlâ bağlanmıyor; sistemdeki bozuk `Programs\Python` temizlenmedi.
+
+## 2026-11-02 (dördüncü oturum)
+- `baglam.md` kapsamı web arayüzünü içerecek şekilde düzeltildi (karar 0004 ile çelişiyordu).
+- Fotoğraf vb. ekler için `docs/baglam/` klasörü açıldı; `baglam.md` buraya taşındı (CLAUDE.md ve iki SKILL.md yolu güncellendi).
+- Açık: github MCP bağlanmadı (`GITHUB_PAT`).
+
 ## 2026-11-02 (üçüncü oturum)
 - `.mcp.json`'a playwright, chrome-devtools ve github (http, `${GITHUB_PAT}`) MCP sunucuları eklendi; henüz bağlantı denenmedi.
 - MCP'leri denemek için `web.py` (web arayüzü) + `tests/test_web.py` yazıldı, testler geçiyor (karar 0004).

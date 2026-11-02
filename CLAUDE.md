@@ -8,6 +8,8 @@ Küçük bir not defteri CLI'ı. Asıl amaç uygulama değil, Claude Code kavram
 - Test: `.venv\Scripts\python -m pytest`
 - Çalıştır: `.venv\Scripts\python -m notlar.cli ekle "metin"` (`PYTHONPATH=src` gerekir)
 
+- Web arayüzü (Django, karar 0005): `.venv\Scripts\python manage.py runserver` → http://127.0.0.1:8000 (`PYTHONPATH` gerekmez). Alternatif: `PYTHONPATH=src` ile `-m notlar.web`.
+
 ## MCP
 - `context7` (`.mcp.json`): güncel kütüphane dökümantasyonu. Kütüphane/API sorularında prompt'a "use context7" ekle.
 
@@ -17,7 +19,7 @@ Küçük bir not defteri CLI'ı. Asıl amaç uygulama değil, Claude Code kavram
 - Her davranış değişikliğine test yaz.
 
 ## Proje hafızası (okuma sırası)
-1. `docs/baglam.md` – proje neden var, hedefler, kapsam
+1. `docs/baglam/baglam.md` – proje neden var, hedefler, kapsam (aynı klasörde fotoğraf vb. ekler)
 2. `docs/kararlar/` – alınmış kararlar (ADR). Çelişen bir şey yapmadan önce oku.
 3. `docs/oturum-gunlugu.md` – son oturumlarda ne yapıldı
 

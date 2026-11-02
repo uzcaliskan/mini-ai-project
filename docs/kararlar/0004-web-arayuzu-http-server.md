@@ -1,7 +1,7 @@
 # 0004 – Web arayüzü standart kütüphane `http.server` ile yapılır
 
 - **Tarih:** 2026-11-02
-- **Durum:** Kabul edildi
+- **Durum:** Yerine geçildi: 0005
 
 ## Bağlam
 Playwright ve Chrome DevTools MCP'lerini denemek için tarayıcıda açılabilen bir arayüz gerekti. Proje CLI'dı, web yüzü yoktu.

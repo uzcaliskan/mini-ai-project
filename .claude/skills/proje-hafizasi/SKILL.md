@@ -9,12 +9,12 @@ Hafıza `docs/` altında düz Markdown dosyalarıdır. Üç katman vardır:
 
 | Katman | Dosya | Ne zaman değişir |
 |---|---|---|
-| Bağlam | `docs/baglam.md` | Proje amacı/kapsamı değişince |
+| Bağlam | `docs/baglam/baglam.md` | Proje amacı/kapsamı değişince |
 | Kararlar | `docs/kararlar/NNNN-baslik.md` | Önemli bir teknik tercih yapılınca |
 | Günlük | `docs/oturum-gunlugu.md` | Her oturum sonunda |
 
 ## Mod 1 – Hatırla (okuma)
-1. `docs/baglam.md`, `docs/kararlar/` içindeki tüm dosyalar ve günlüğün ilk ~30 satırını oku.
+1. `docs/baglam/baglam.md`, `docs/kararlar/` içindeki tüm dosyalar ve günlüğün ilk ~30 satırını oku.
 2. Kullanıcıya 5 maddeyi geçmeyen özet ver: amaç, geçerli kararlar, son yapılanlar, sıradaki adım.
 
 ## Mod 2 – Karar kaydet
